@@ -1,0 +1,58 @@
+<div class="layout-container">
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo-section" routerLink="/">
+                    <div class="book-icon">
+                        <span class="book red"></span>
+                        <span class="book blue"></span>
+                        <span class="book green"></span>
+                    </div>
+                    <span class="logo-text">BookClub</span>
+                </div>
+
+                <ul class="nav-links">
+                    <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+                    </li>
+                    <li><a routerLink="/books" routerLinkActive="active">Manage Catalogs</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="content">
+        <div class="container">
+            <ng-content></ng-content>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <span class="logo-text">BookClub</span>
+                    <p>Connecting book lovers worldwide. Discover your next favorite read.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a routerLink="/books">Browse Books</a></li>
+                        <li><a routerLink="/community">Community</a></li>
+                        <li><a routerLink="/events">Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; {{ currentYear }} BookClub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</div>
