@@ -1,57 +1,63 @@
-<div class="layout-container">
-    <header class="header">
+<div class="layout-container d-flex flex-column min-vh-100">
+    <header class="header sticky-top py-2">
         <div class="container">
-            <nav class="navbar">
-                <div class="logo-section" routerLink="/">
-                    <div class="book-icon">
+            <nav class="navbar navbar-expand-lg d-flex justify-content-between align-items-center py-3">
+                <div class="logo-section d-flex align-items-center gap-2" routerLink="/" style="cursor: pointer;">
+                    <div class="book-icon position-relative">
                         <span class="book red"></span>
                         <span class="book blue"></span>
                         <span class="book green"></span>
                     </div>
-                    <span class="logo-text">BookClub</span>
+                    <span class="logo-text h4 mb-0 fw-bold">BookClub</span>
                 </div>
 
-                <ul class="nav-links">
-                    <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-                    </li>
-                    <li><a routerLink="/books" routerLinkActive="active">Manage Catalogs</a></li>
+                <ul class="nav-links d-none d-lg-flex list-unstyled gap-4 mb-0">
+                    <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                            class="text-decoration-none transition-all">Home</a></li>
+                    <li><a routerLink="/manage-catalogs" routerLinkActive="active"
+                            class="text-decoration-none transition-all">Manage Catalogs</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main class="content">
-        <div class="container">
+    <main class="content flex-grow-1">
+        <div class="container py-4">
             <ng-content></ng-content>
         </div>
     </main>
 
-    <footer class="footer">
+    <footer class="footer mt-auto pt-5 pb-3 border-top">
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <span class="logo-text">BookClub</span>
-                    <p>Connecting book lovers worldwide. Discover your next favorite read.</p>
+            <div class="row g-4">
+                <div class="col-lg-6 footer-brand">
+                    <span class="logo-text h4 mb-3 d-inline-block fw-bold">BookClub</span>
+                    <p class="text-secondary opacity-75" style="max-width: 350px;">Connecting book lovers worldwide.
+                        Discover your next favorite read.</p>
                 </div>
-                <div class="footer-links">
-                    <h4>Explore</h4>
-                    <ul>
-                        <li><a routerLink="/books">Browse Books</a></li>
-                        <li><a routerLink="/community">Community</a></li>
-                        <li><a routerLink="/events">Events</a></li>
+                <div class="col-md-3 footer-links">
+                    <h5 class="text-white mb-3">Explore</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a routerLink="/books" class="text-secondary text-decoration-none">Browse
+                                Books</a></li>
+                        <li class="mb-2"><a routerLink="/community"
+                                class="text-secondary text-decoration-none">Community</a></li>
+                        <li class="mb-2"><a routerLink="/events" class="text-secondary text-decoration-none">Events</a>
+                        </li>
                     </ul>
                 </div>
-                <div class="footer-links">
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
+                <div class="col-md-3 footer-links">
+                    <h5 class="text-white mb-3">Support</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-secondary text-decoration-none">Help Center</a></li>
+                        <li class="mb-2"><a href="#" class="text-secondary text-decoration-none">Privacy Policy</a></li>
+                        <li class="mb-2"><a href="#" class="text-secondary text-decoration-none">Terms of Service</a>
+                        </li>
                     </ul>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; {{ currentYear }} BookClub. All rights reserved.</p>
+            <div class="footer-bottom mt-5 pt-3 border-top opacity-50 text-center">
+                <p class="mb-0 small">&copy; {{ currentYear }} BookClub. All rights reserved.</p>
             </div>
         </div>
     </footer>
