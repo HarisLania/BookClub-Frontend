@@ -1,0 +1,137 @@
+@use "../../../variables" as *;
+
+.home-container {
+    padding: 1rem 0;
+}
+
+// ng-select customization
+::ng-deep .ng-select {
+    .ng-select-container {
+        background-color: $bg-card !important;
+        border: 1px solid $border-light !important;
+        border-radius: $radius-md !important;
+        height: 56px !important;
+        min-height: 56px !important;
+        color: $text-primary !important;
+        display: flex;
+        align-items: center;
+
+        .ng-value-container {
+            padding-left: 1.3rem !important;
+
+            .ng-placeholder {
+                color: $text-muted !important;
+            }
+        }
+    }
+
+    &.ng-select-focused .ng-select-container {
+        border-color: $accent-primary !important;
+        box-shadow: 0 0 0 2px $box-shadow-color !important;
+    }
+}
+
+::ng-deep .ng-dropdown-panel {
+    background-color: #1e293b !important;
+    border: 1px solid $border-light !important;
+    border-radius: $radius-md !important;
+    overflow: hidden;
+
+    .ng-option {
+        background-color: $options-background !important;
+        color: $text-link !important;
+        padding: 10px 15px !important;
+
+        &:hover,
+        &.ng-option-marked {
+            background-color: $options-hover-background !important;
+            color: $text-primary !important;
+        }
+    }
+}
+
+.search-box {
+    input {
+        background-color: $bg-card;
+        color: $text-primary;
+        height: 56px;
+        transition: all 0.2s;
+
+        &:focus {
+            outline: none;
+            border-color: $accent-primary;
+            box-shadow: 0 0 0 2px $box-shadow-color;
+        }
+
+        &::placeholder {
+            color: $text-muted;
+        }
+    }
+}
+
+.scrollable-books-container {
+    max-height: 600px;
+    overflow-y: auto;
+
+    // Custom scrollbar
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: $border-light;
+        border-radius: 3px;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    }
+}
+
+.book-card {
+    height: 260px;
+    cursor: pointer;
+    background-color: $book-color;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
+
+    .book-spine {
+        width: 12px;
+        background: $book-spine-color;
+        transform: translateX(-4px);
+    }
+
+    .book-title {
+        font-size: 1.1rem;
+        line-height: 1.3;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .author-name {
+        font-size: 0.8rem;
+        letter-spacing: 0.01em;
+    }
+
+    .year-info {
+        font-size: 0.75rem;
+    }
+
+    &:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: $shadow-lg;
+
+        .book-spine {
+            transform: translateX(0) !important;
+        }
+    }
+
+}
