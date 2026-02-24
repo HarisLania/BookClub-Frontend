@@ -26,10 +26,11 @@
 
         <!-- Books multi-select -->
         <div class="mb-2">
-            <span class="small fw-bold text-uppercase tracking-wider mb-2 opacity-75">Select Books</span>
+            <span class="small fw-bold text-uppercase tracking-wider mb-2 d-block opacity-75">Select Books</span>
             <ng-select [items]="booksDropdown()" bindLabel="title" bindValue="id" formControlName="books"
                 [multiple]="true" [searchable]="true" [loading]="dropdownLoading()"
-                placeholder="Choose books to include..." class="premium-select">
+                placeholder="Choose books to include..." class="premium-select"
+                (search)="bookSearchQuery.set($event.term)">
             </ng-select>
         </div>
     </div>

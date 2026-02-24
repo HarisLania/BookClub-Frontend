@@ -24,7 +24,7 @@ export class ManageCatalog implements OnInit {
   private bookService = inject(BookService);
 
   @Input() catalog!: Catalog;
-  @Input() searchQuery = '';
+  @Input() catalogSearchQuery = ''; // To Return Correct State On Main Page
   isUpdate = false;
   form!: FormGroup;
 
@@ -33,12 +33,33 @@ export class ManageCatalog implements OnInit {
   dropdownError = this.bookService.dropdownError;
   loading = signal(false);
 
+  bookSearchQuery = signal('');
+  debouncedBookSearchQuery = signal('');
+
   constructor() {
     // Handle Dropdown Error
     effect(() => {
       const err = this.dropdownError();
       if (err) this.toast.error(err, 'Error', () => this.bookService.clearDropdownError());
     });
+
+    // Books Debounce Search
+    effect((onCleanup) => {
+      const term = this.bookSearchQuery();
+
+      const t = setTimeout(() => {
+        this.debouncedBookSearchQuery.set(term);
+      }, 400);
+
+      onCleanup(() => clearTimeout(t));
+    });
+
+    // 🔹 load books whenever search changes
+    effect(() => {
+      // Load books dropdown
+      this.bookService.loadBookDropdown(this.debouncedBookSearchQuery());
+    });
+
   }
 
   ngOnInit() {
@@ -49,8 +70,7 @@ export class ManageCatalog implements OnInit {
       books: [this.catalog?.books || []],
     });
 
-    // Load books dropdown
-    this.bookService.loadBookDropdown();
+
   }
 
   save() {
@@ -65,7 +85,7 @@ export class ManageCatalog implements OnInit {
       this.catalogService.updateCatalog(this.catalog.id, value).subscribe({
         next: () => {
           this.loading.set(false);
-          this.catalogService.loadCatalogs(this.searchQuery);
+          this.catalogService.loadCatalogs(this.catalogSearchQuery);
           this.bsModalRef.hide();
         },
         error: (err) => {
@@ -78,7 +98,7 @@ export class ManageCatalog implements OnInit {
         next: () => {
           this.toast.success('Catalog created successfully');
           this.loading.set(false);
-          this.catalogService.loadCatalogs(this.searchQuery);
+          this.catalogService.loadCatalogs(this.catalogSearchQuery);
           this.bsModalRef.hide();
         },
         error: (err) => {

@@ -57,13 +57,13 @@ export class MainCatalog {
 
   openCreateModal() {
     this.bsModalRef = this.modalService.show(ManageCatalog, {
-      initialState: { searchQuery: this.debouncedCatalogSearchQuery() },
+      initialState: { catalogSearchQuery: this.debouncedCatalogSearchQuery() },
     });
   }
 
   openEditModal(catalog: Catalog) {
     this.bsModalRef = this.modalService.show(ManageCatalog, {
-      initialState: { catalog, searchQuery: this.debouncedCatalogSearchQuery() },
+      initialState: { catalog, catalogSearchQuery: this.debouncedCatalogSearchQuery() },
     });
   }
 
