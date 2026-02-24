@@ -53,11 +53,9 @@ export class Home {
     effect((onCleanup) => {
       const term = this.catalogSearchQuery();
 
-      if (!term || term.length < 2) return;
-
       const t = setTimeout(() => {
         this.debouncedCatalogSearchQuery.set(term);
-      }, 250);
+      }, 400);
 
       onCleanup(() => clearTimeout(t));
     });
