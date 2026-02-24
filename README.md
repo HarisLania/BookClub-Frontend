@@ -1,4 +1,4 @@
-# 📘 Book Club Frontend
+# 📚 Book Club Frontend
 
 A lightweight **Angular 21** frontend application for managing **Books** and **Catalogs**, built to consume a Django REST API.
 
@@ -48,6 +48,11 @@ cd BookClub-Frontend
 ## Install dependencies
 ```bash
 npm install
+```
+
+## ESLint Check
+```bash
+npm run lint
 ```
 
 ## Run the application
