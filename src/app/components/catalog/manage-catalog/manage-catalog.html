@@ -15,7 +15,11 @@
             </div>
             @if (form.get('name')?.invalid && form.get('name')?.touched) {
             <div class="text-danger mt-1 small fst-italic">
+                @if (form.get('name')?.errors?.['required']) {
                 Catalog name is required
+                } @else if (form.get('name')?.errors?.['maxlength']) {
+                Catalog name cannot exceed 100 characters
+                }
             </div>
             }
         </div>

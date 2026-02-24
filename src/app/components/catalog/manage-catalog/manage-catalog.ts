@@ -45,7 +45,7 @@ export class ManageCatalog implements OnInit {
     this.isUpdate = this.catalog != null;
     // Initialize form with input values
     this.form = this.fb.group({
-      name: [this.catalog?.name || '', Validators.required],
+      name: [this.catalog?.name || '', [Validators.required, Validators.maxLength(100)]],
       books: [this.catalog?.books || []],
     });
 
