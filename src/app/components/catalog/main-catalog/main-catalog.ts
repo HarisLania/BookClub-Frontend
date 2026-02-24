@@ -55,21 +55,21 @@ export class MainCatalog {
     this.catalogSearchQuery.set(value);
   }
 
-  openCreateModal() {
-    this.bsModalRef = this.modalService.show(ManageCatalog, {
-      initialState: { catalogSearchQuery: this.debouncedCatalogSearchQuery() },
-    });
-  }
-
-  openEditModal(catalog: Catalog) {
+  openManageCatalogModal(catalog: Catalog | undefined = undefined) {
     this.bsModalRef = this.modalService.show(ManageCatalog, {
       initialState: { catalog, catalogSearchQuery: this.debouncedCatalogSearchQuery() },
+      backdrop: 'static',
+      ignoreBackdropClick: true,
+      keyboard: false
     });
   }
 
   openViewModal(catalogId: number) {
     this.bsModalRef = this.modalService.show(ViewCatalog, {
       initialState: { catalogId }, // just pass the ID
+      backdrop: 'static',
+      ignoreBackdropClick: true,
+      keyboard: false
     });
   }
 
@@ -80,7 +80,10 @@ export class MainCatalog {
         message: 'Are you sure you want to delete this catalog? This action cannot be undone.',
         btnConfirmText: 'Delete',
         isDanger: true
-      }
+      },
+      backdrop: 'static',
+      ignoreBackdropClick: true,
+      keyboard: false
     });
 
     this.bsModalRef.content.onClose.subscribe((confirmed: boolean) => {
