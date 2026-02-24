@@ -51,7 +51,7 @@ body {
 
 // ng-select global theme overrides for dark mode
 .ng-select {
-    color: $text-primary;
+    color: $text-primary !important;
 
     .ng-select-container {
         background-color: $bg-card !important;
@@ -68,6 +68,11 @@ body {
         }
 
         .ng-value-container .ng-value {
+            color: $text-primary !important;
+        }
+
+        .ng-input>input {
+            margin-top: 10px;
             color: $text-primary !important;
         }
     }
