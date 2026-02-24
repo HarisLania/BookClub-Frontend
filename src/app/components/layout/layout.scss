@@ -6,40 +6,6 @@
     border-bottom: 1px solid $border-light;
 }
 
-.book-icon {
-    width: 24px;
-    height: 24px;
-
-    .book {
-        position: absolute;
-        width: 12px;
-        height: 16px;
-        border-radius: 2px;
-        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-
-        &.red {
-            background: $accent-danger;
-            z-index: 3;
-            left: 0;
-            top: 0;
-        }
-
-        &.blue {
-            background: $accent-primary;
-            z-index: 2;
-            left: 4px;
-            top: 4px;
-        }
-
-        &.green {
-            background: $accent-success;
-            z-index: 1;
-            left: 8px;
-            top: 8px;
-        }
-    }
-}
-
 .nav-links {
     a {
         color: $text-secondary;
@@ -76,8 +42,4 @@
             color: $accent-primary;
         }
     }
-}
-
-.transition-all {
-    transition: all 0.2s ease-in-out;
 }

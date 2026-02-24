@@ -57,7 +57,11 @@ body {
         background-color: $bg-card !important;
         border: 1px solid $border-light !important;
         border-radius: $radius-md !important;
+        height: 56px !important;
+        min-height: 56px !important;
         color: $text-primary !important;
+        display: flex;
+        align-items: center;
 
         .ng-placeholder {
             color: $text-muted !important;
@@ -89,4 +93,284 @@ body {
             color: $text-primary !important;
         }
     }
+}
+
+// ============================================================
+// 🔹 Buttons
+// ============================================================
+
+.btn-primary {
+    background-color: $accent-primary;
+    border-color: transparent;
+    border-radius: $radius-md;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    &:hover:not(:disabled) {
+        background-color: $accent-hover;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba($accent-primary, 0.3);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        background-color: $text-muted;
+    }
+}
+
+.btn-danger {
+    background-color: $accent-danger;
+    border-color: transparent;
+    font-weight: 600;
+    border-radius: $radius-md;
+    transition: all 0.2s;
+
+    &:hover {
+        background-color: rgba($accent-danger, 0.9);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba($accent-danger, 0.3);
+    }
+}
+
+.btn-cancel {
+    background-color: rgba($accent-danger, 0.6);
+    border-color: transparent;
+    border-radius: $radius-md;
+    color: $text-primary;
+    transition: all 0.3s;
+
+    &:hover {
+        background-color: rgba($accent-danger, 0.4);
+        transform: translateY(-1px);
+        color: $text-primary;
+    }
+}
+
+.btn-link {
+    font-weight: 600;
+    font-size: 0.9rem;
+
+    &:hover {
+        color: $text-primary !important;
+    }
+}
+
+.btn-action {
+    width: 120px;
+    height: 40px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $radius-sm;
+    transition: all 0.2s;
+    color: $text-primary;
+
+    &.btn-view {
+        background: rgba($accent-primary, 0.6);
+    }
+
+    &.btn-edit {
+        background: rgba($accent-warning, 0.6);
+    }
+
+    &.btn-delete {
+        background: rgba($accent-danger, 0.6);
+    }
+
+    &.btn-view:hover {
+        background: rgba($accent-primary, 0.4);
+    }
+
+    &.btn-edit:hover {
+        background: rgba($accent-warning, 0.4);
+    }
+
+    &.btn-delete:hover {
+        background: rgba($accent-danger, 0.4);
+    }
+}
+
+// ============================================================
+// 🔹 Form Controls
+// ============================================================
+
+.form-control {
+    background-color: $bg-card;
+    color: $text-primary;
+    height: 48px;
+    transition: all 0.2s;
+
+    &:focus {
+        outline: none;
+        background-color: $bg-card;
+        color: $text-primary;
+        border-color: $accent-primary;
+        box-shadow: 0 0 0 2px $box-shadow-color;
+    }
+
+    &::placeholder {
+        color: $text-muted;
+    }
+}
+
+// ============================================================
+// 🔹 Search Box
+// ============================================================
+
+.search-box {
+    input {
+        background-color: $bg-card;
+        color: $text-primary;
+        height: 56px;
+        transition: all 0.2s;
+
+        &:focus {
+            outline: none;
+            background-color: $bg-card;
+            color: $text-primary;
+            border-color: $accent-primary;
+            box-shadow: 0 0 0 2px $box-shadow-color;
+        }
+
+        &::placeholder {
+            color: $text-muted;
+        }
+    }
+}
+
+// ============================================================
+// 🔹 Scrollable Containers (shared dark scrollbar)
+// ============================================================
+
+%dark-scrollbar {
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: $border-light;
+        border-radius: 3px;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    }
+}
+
+.scrollable-container {
+    @extend %dark-scrollbar;
+    max-height: 400px;
+}
+
+.scrollable-books-container {
+    @extend %dark-scrollbar;
+    max-height: 600px;
+
+    &::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.02);
+    }
+}
+
+.scrollable-mini {
+    @extend %dark-scrollbar;
+    max-height: 250px;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 2px;
+    }
+}
+
+// ============================================================
+// 🔹 Book Icon (logo / catalog icon)
+// ============================================================
+
+.book-icon {
+    width: 24px;
+    height: 24px;
+
+    .book {
+        position: absolute;
+        width: 12px;
+        height: 16px;
+        border-radius: 2px;
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+
+        &.red {
+            background: $accent-danger;
+            z-index: 3;
+            left: 0;
+            top: 0;
+        }
+
+        &.blue {
+            background: $accent-primary;
+            z-index: 2;
+            left: 4px;
+            top: 4px;
+        }
+
+        &.green {
+            background: $accent-success;
+            z-index: 1;
+            left: 8px;
+            top: 8px;
+        }
+    }
+
+    // Small variant used in catalog list items
+    &.book-icon-sm {
+        width: 20px;
+        height: 20px;
+
+        .book {
+            width: 12px;
+            height: 12px;
+
+            &.red {
+                left: 0;
+                top: 0;
+            }
+
+            &.blue {
+                left: 3px;
+                top: 3px;
+            }
+
+            &.green {
+                left: 7px;
+                top: 7px;
+            }
+        }
+    }
+}
+
+// ============================================================
+// 🔹 Utility Classes
+// ============================================================
+
+.transition-all {
+    transition: all 0.2s ease-in-out;
+}
+
+.border-dashed {
+    border-style: dashed !important;
+    border-color: $border-light !important;
+}
+
+.x-small {
+    font-size: 0.75rem;
+}
+
+.book-color {
+    color: $book-color;
 }
