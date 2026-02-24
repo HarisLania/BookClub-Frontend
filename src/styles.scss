@@ -1,12 +1,92 @@
 /* You can add global styles to this file, and also import other style files */
 
 @use "variables" as *;
-@use "bootstrap/scss/bootstrap";
+@use "bootstrap/dist/css/bootstrap.min.css";
+@use 'ngx-toastr/toastr';
 @use "@ng-select/ng-select/themes/default.theme.css";
+@use "material-symbols";
 
 body {
     margin: 0;
     background-color: $bg-dark;
     color: $text-primary;
     font-family: $font-primary;
+}
+
+// Modal Overrides
+.modal-backdrop {
+    background-color: #000;
+
+    &.show {
+        opacity: 0.7;
+    }
+}
+
+.modal-content {
+    background-color: $bg-dark;
+    border: 1px solid $border-light;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-lg;
+    color: $text-primary;
+}
+
+.modal-header {
+    border-bottom: 1px solid $border-muted;
+    padding: 1.5rem;
+
+    .btn-close {
+        filter: invert(1) grayscale(100%) brightness(200%);
+        box-shadow: none;
+    }
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-footer {
+    border-top: 1px solid $border-muted;
+    padding: 1.25rem;
+}
+
+// ng-select global theme overrides for dark mode
+.ng-select {
+    color: $text-primary;
+
+    .ng-select-container {
+        background-color: $bg-card !important;
+        border: 1px solid $border-light !important;
+        border-radius: $radius-md !important;
+        color: $text-primary !important;
+
+        .ng-placeholder {
+            color: $text-muted !important;
+        }
+
+        .ng-value-container .ng-value {
+            color: $text-primary !important;
+        }
+    }
+
+    &.ng-select-opened .ng-select-container {
+        z-index: 1051; // above modal
+    }
+}
+
+.ng-dropdown-panel {
+    background-color: $options-background !important;
+    border: 1px solid $border-light !important;
+    border-radius: $radius-md !important;
+    z-index: 1052 !important;
+
+    .ng-option {
+        background-color: $options-background !important;
+        color: $text-link !important;
+
+        &:hover,
+        &.ng-option-marked {
+            background-color: $options-hover-background !important;
+            color: $text-primary !important;
+        }
+    }
 }
