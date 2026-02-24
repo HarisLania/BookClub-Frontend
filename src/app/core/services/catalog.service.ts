@@ -10,14 +10,25 @@ export class CatalogService {
     private http = inject(HttpClient);
 
     // 🔹 Signals for main catalog list
-    catalogsLoading = signal(false);
-    catalogsError = signal<string | null>(null);
-    catalogs = signal<Catalog[]>([]);
+    private _catalogsLoading = signal(false);
+    private _catalogsError = signal<string | null>(null);
+    private _catalogs = signal<Catalog[]>([]);
 
     // 🔹 Signals for dropdown catalogs
-    dropdownLoading = signal(false);
-    dropdownError = signal<string | null>(null);
-    dropdownCatalogs = signal<CatalogDropdown[]>([]);
+    private _dropdownLoading = signal(false);
+    private _dropdownError = signal<string | null>(null);
+    private _dropdownCatalogs = signal<CatalogDropdown[]>([]);
+
+    // 🔹 Expose Read-only Signals
+    catalogsLoading = this._catalogsLoading.asReadonly();
+    catalogsError = this._catalogsError.asReadonly();
+    catalogs = this._catalogs.asReadonly();
+    dropdownLoading = this._dropdownLoading.asReadonly();
+    dropdownError = this._dropdownError.asReadonly();
+    dropdownCatalogs = this._dropdownCatalogs.asReadonly();
+
+    clearCatalogsError() { this._catalogsError.set(null); }
+    clearDropdownError() { this._dropdownError.set(null); }
 
     private extractErrorMessage(err: HttpErrorResponse): string {
         if (!err?.error) return 'Unknown error';
@@ -30,35 +41,35 @@ export class CatalogService {
 
     // 🔹 Load main catalog list
     loadCatalogs(search?: string) {
-        this.catalogsLoading.set(true);
-        this.catalogsError.set(null);
+        this._catalogsLoading.set(true);
+        this._catalogsError.set(null);
 
         let params = new HttpParams();
         if (search) params = params.set('search', search);
 
         this.http
             .get<Catalog[]>(`${this.api.BASE_URL}/catalogs/`, { params })
-            .pipe(finalize(() => this.catalogsLoading.set(false)))
+            .pipe(finalize(() => this._catalogsLoading.set(false)))
             .subscribe({
-                next: data => this.catalogs.set(data),
-                error: err => this.catalogsError.set(this.extractErrorMessage(err)),
+                next: data => this._catalogs.set(data),
+                error: err => this._catalogsError.set(this.extractErrorMessage(err)),
             });
     }
 
     // 🔹 Load dropdown catalogs into signal
     loadCatalogDropdown(search?: string) {
-        this.dropdownLoading.set(true);
-        this.dropdownError.set(null);
+        this._dropdownLoading.set(true);
+        this._dropdownError.set(null);
 
         let params = new HttpParams();
         if (search) params = params.set('search', search);
 
         this.http
             .get<CatalogDropdown[]>(`${this.api.BASE_URL}/catalogs/dropdown/`, { params })
-            .pipe(finalize(() => this.dropdownLoading.set(false)))
+            .pipe(finalize(() => this._dropdownLoading.set(false)))
             .subscribe({
-                next: data => this.dropdownCatalogs.set(data),
-                error: err => this.dropdownError.set(this.extractErrorMessage(err)),
+                next: data => this._dropdownCatalogs.set(data),
+                error: err => this._dropdownError.set(this.extractErrorMessage(err)),
             });
     }
 

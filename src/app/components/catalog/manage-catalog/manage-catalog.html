@@ -24,7 +24,8 @@
         <div class="mb-2">
             <span class="small fw-bold text-uppercase tracking-wider mb-2 opacity-75">Select Books</span>
             <ng-select [items]="booksDropdown()" bindLabel="title" bindValue="id" formControlName="books"
-                [multiple]="true" [searchable]="true" placeholder="Choose books to include..." class="premium-select">
+                [multiple]="true" [searchable]="true" [loading]="dropdownLoading()"
+                placeholder="Choose books to include..." class="premium-select">
             </ng-select>
         </div>
     </div>
@@ -33,8 +34,12 @@
         <button class="btn btn-cancel px-4 py-2 fw-bold" (click)="cancel()">
             Cancel
         </button>
-        <button class="btn btn-primary px-4 py-2 fw-bold" [disabled]="loading" (click)="save()">
-            {{ loading ? 'Saving...' : (isUpdate ? 'Update Catalog' : 'Create Catalog') }}
+        <button class="btn btn-primary px-4 py-2 fw-bold" [disabled]="loading()" (click)="save()">
+            {{ isUpdate ? 'Update Catalog' : 'Create Catalog' }}
         </button>
     </div>
+
+    @if (loading()) {
+    <app-loader message="Saving..."></app-loader>
+    }
 </div>

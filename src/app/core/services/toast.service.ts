@@ -1,4 +1,4 @@
-import { inject, Injectable, WritableSignal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({ providedIn: 'root' })
@@ -9,14 +9,12 @@ export class ToastService {
         this.toastr.success(message, title);
     }
 
-    error(message: string, title?: string, clearSignal?: WritableSignal<string | null>) {
+    error(message: string, title?: string, cleanup?: () => void) {
         this.toastr.error(message, title);
-
-        // 🔹 if an error signal is provided, clear it after toast timeout
-        if (clearSignal) {
+        if (cleanup) {
             setTimeout(() => {
-                clearSignal.set(null);
-            }, 5000); // match your toast timeout
+                cleanup();
+            }, 5000);
         }
     }
 

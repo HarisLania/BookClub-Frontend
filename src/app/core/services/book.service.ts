@@ -10,12 +10,23 @@ export class BookService {
     private http = inject(HttpClient);
 
     // 🔹 state
-    books = signal<Book[]>([]);
-    dropdownBooks = signal<BookDropdown[]>([]);
-    booksLoading = signal(false);
-    dropdownLoading = signal(false);
-    booksError = signal<string | null>(null);
-    dropdownError = signal<string | null>(null);
+    private _books = signal<Book[]>([]);
+    private _dropdownBooks = signal<BookDropdown[]>([]);
+    private _booksLoading = signal(false);
+    private _dropdownLoading = signal(false);
+    private _booksError = signal<string | null>(null);
+    private _dropdownError = signal<string | null>(null);
+
+    // 🔹 Expose Read-only Signals
+    books = this._books.asReadonly();
+    dropdownBooks = this._dropdownBooks.asReadonly();
+    booksLoading = this._booksLoading.asReadonly();
+    dropdownLoading = this._dropdownLoading.asReadonly();
+    booksError = this._booksError.asReadonly();
+    dropdownError = this._dropdownError.asReadonly();
+
+    clearBooksError() { this._booksError.set(null); }
+    clearDropdownError() { this._dropdownError.set(null); }
 
     extractErrorMessage(err: HttpErrorResponse): string {
         if (!err?.error) return 'Unknown error';
@@ -32,8 +43,8 @@ export class BookService {
 
     // 🔹 Load full books list
     loadBooks(filters?: { catalogId?: number | null; search?: string }) {
-        this.booksLoading.set(true);
-        this.booksError.set(null);
+        this._booksLoading.set(true);
+        this._booksError.set(null);
 
         let params = new HttpParams();
 
@@ -47,18 +58,18 @@ export class BookService {
 
         this.http
             .get<Book[]>(`${this.api.BASE_URL}/books/`, { params })
-            .pipe(finalize(() => this.booksLoading.set(false)))
+            .pipe(finalize(() => this._booksLoading.set(false)))
             .subscribe({
-                next: data => this.books.set(data),
-                error: err => this.booksError.set(this.extractErrorMessage(err))
+                next: data => this._books.set(data),
+                error: err => this._booksError.set(this.extractErrorMessage(err))
             });
     }
 
 
     // 🔹 Load dropdown books
     loadBookDropdown(search?: string) {
-        this.dropdownLoading.set(true);
-        this.dropdownError.set(null);
+        this._dropdownLoading.set(true);
+        this._dropdownError.set(null);
 
         let params = new HttpParams();
         if (search) {
@@ -67,10 +78,10 @@ export class BookService {
 
         this.http
             .get<BookDropdown[]>(`${this.api.BASE_URL}/books/dropdown/`, { params })
-            .pipe(finalize(() => this.dropdownLoading.set(false)))
+            .pipe(finalize(() => this._dropdownLoading.set(false)))
             .subscribe({
-                next: data => this.dropdownBooks.set(data),
-                error: err => this.dropdownError.set(this.extractErrorMessage(err))
+                next: data => this._dropdownBooks.set(data),
+                error: err => this._dropdownError.set(this.extractErrorMessage(err))
             });
     }
 }

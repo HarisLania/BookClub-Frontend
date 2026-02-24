@@ -1,11 +1,10 @@
-import { Component, effect, inject, Signal, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BookService } from '../../core/services/book.service';
-import { Book } from '../../core/models/book.model';
-import { CatalogDropdown } from '../../core/models/catalog.model';
 import { CatalogService } from '../../core/services/catalog.service';
+import { ToastService } from '../../core/services/toast.service';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +16,7 @@ import { CatalogService } from '../../core/services/catalog.service';
 export class Home {
   private bookService = inject(BookService);
   private catalogService = inject(CatalogService);
+  private toast = inject(ToastService);
 
   // UI state
   selectedCatalog = signal<number | null>(null);
@@ -27,14 +27,14 @@ export class Home {
   debouncedCatalogSearchQuery = signal('');
 
   // expose service signals (Book)
-  books!: Signal<Book[]>;
-  loading!: Signal<boolean>;
-  error!: Signal<string | null>;
+  books = this.bookService.books;
+  loading = this.bookService.booksLoading;
+  error = this.bookService.booksError;
 
   // expose service signals (Catalog)
-  catalogDropdownLoading!: Signal<boolean>;
-  catalogDropdownError!: Signal<string | null>;
-  catalogDropdown!: Signal<CatalogDropdown[]>;
+  catalogDropdownLoading = this.catalogService.dropdownLoading;
+  catalogDropdownError = this.catalogService.dropdownError;
+  catalogDropdown = this.catalogService.dropdownCatalogs;
 
   constructor() {
 
@@ -62,11 +62,6 @@ export class Home {
       onCleanup(() => clearTimeout(t));
     });
 
-    // Book Signals
-    this.books = this.bookService.books;
-    this.loading = this.bookService.booksLoading;
-    this.error = this.bookService.booksError;
-
     effect(() => {
       this.bookService.loadBooks({
         catalogId: this.selectedCatalog(),
@@ -74,13 +69,14 @@ export class Home {
       });
     });
 
-    // Catalog Signals
-    this.catalogDropdown = this.catalogService.dropdownCatalogs;
-    this.catalogDropdownLoading = this.catalogService.dropdownLoading;
-    this.catalogDropdownError = this.catalogService.dropdownError;
-
     effect(() => {
       this.catalogService.loadCatalogDropdown(this.debouncedCatalogSearchQuery());
+    });
+
+    // Handle Catalog Dropdown Error
+    effect(() => {
+      const err = this.catalogDropdownError();
+      if (err) this.toast.error(err, 'Error', () => this.catalogService.clearDropdownError());
     });
   }
 }

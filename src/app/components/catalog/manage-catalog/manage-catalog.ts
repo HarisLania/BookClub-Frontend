@@ -1,17 +1,17 @@
-import { Component, inject, Input, OnInit, Signal } from '@angular/core';
+import { Component, effect, inject, Input, OnInit, signal } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CatalogService } from '../../../core/services/catalog.service';
 import { BookService } from '../../../core/services/book.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { Catalog } from '../../../core/models/catalog.model';
-import { BookDropdown } from '../../../core/models/book.model';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { Loader } from '../../../core/components/loader/loader';
 
 @Component({
   selector: 'app-manage-catalog',
-  imports: [CommonModule, ReactiveFormsModule, NgSelectModule],
+  imports: [CommonModule, ReactiveFormsModule, NgSelectModule, Loader],
   templateUrl: './manage-catalog.html',
   styleUrl: './manage-catalog.scss',
 })
@@ -26,10 +26,20 @@ export class ManageCatalog implements OnInit {
   @Input() catalog!: Catalog;
   @Input() searchQuery = '';
   isUpdate = false;
-
   form!: FormGroup;
-  booksDropdown!: Signal<BookDropdown[]>;
-  loading = false;
+
+  booksDropdown = this.bookService.dropdownBooks;
+  dropdownLoading = this.bookService.dropdownLoading;
+  dropdownError = this.bookService.dropdownError;
+  loading = signal(false);
+
+  constructor() {
+    // Handle Dropdown Error
+    effect(() => {
+      const err = this.dropdownError();
+      if (err) this.toast.error(err, 'Error', () => this.bookService.clearDropdownError());
+    });
+  }
 
   ngOnInit() {
     this.isUpdate = this.catalog != null;
@@ -41,7 +51,6 @@ export class ManageCatalog implements OnInit {
 
     // Load books dropdown
     this.bookService.loadBookDropdown();
-    this.booksDropdown = this.bookService.dropdownBooks;
   }
 
   save() {
@@ -50,32 +59,31 @@ export class ManageCatalog implements OnInit {
       return;
     }
 
-    this.loading = true;
+    this.loading.set(true);
     const value: Catalog = this.form.value;
     if (this.isUpdate) {
       this.catalogService.updateCatalog(this.catalog.id, value).subscribe({
         next: () => {
-          this.toast.success('Catalog updated successfully');
+          this.loading.set(false);
           this.catalogService.loadCatalogs(this.searchQuery);
           this.bsModalRef.hide();
-          this.loading = false;
         },
         error: (err) => {
           this.toast.error(err); // backend/API errors
-          this.loading = false;
+          this.loading.set(false);
         },
       });
     } else {
       this.catalogService.createCatalog(value).subscribe({
         next: () => {
           this.toast.success('Catalog created successfully');
+          this.loading.set(false);
           this.catalogService.loadCatalogs(this.searchQuery);
           this.bsModalRef.hide();
-          this.loading = false;
         },
         error: (err) => {
           this.toast.error(err); // backend/API errors
-          this.loading = false;
+          this.loading.set(false);
         },
       });
     }

@@ -39,5 +39,9 @@
             Close
         </button>
     </div>
+
+    @if (loading()) {
+    <app-loader></app-loader>
+    }
 </div>
 }

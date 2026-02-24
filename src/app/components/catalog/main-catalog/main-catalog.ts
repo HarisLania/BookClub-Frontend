@@ -47,7 +47,7 @@ export class MainCatalog {
     // 🔹 show toast automatically when error occurs and clear the signal
     effect(() => {
       const err = this.catalogsError();
-      if (err) this.toast.error(err, 'Error', this.catalogsError);
+      if (err) this.toast.error(err, 'Error', () => this.catalogService.clearCatalogsError());
     });
   }
 
