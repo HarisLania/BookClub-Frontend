@@ -1,0 +1,43 @@
+@if (catalog()) {
+<div class="modal-content border-0">
+    <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold text-uppercase tracking-wider fs-6">Catalog Details</h5>
+        <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="close()"></button>
+    </div>
+
+    <div class="modal-body py-4">
+        <div class="detail-group mb-4">
+            <span class="small fw-bold text-uppercase tracking-wider mb-1 opacity-50">Catalog Name</span>
+            <h4 class="fw-bold mb-0 text-white">{{ catalog()!.name }}</h4>
+        </div>
+
+        <div class="books-section">
+            <span class="small fw-bold text-uppercase tracking-wider mb-3 d-block opacity-50">
+                Included Books ({{ catalog()!.books.length }})
+            </span>
+
+            <div class="books-list scrollable-mini pe-2">
+                @for (book of catalog()!.books; track book.id) {
+                <div class="book-item d-flex align-items-center gap-3 p-2 px-3 mb-2 rounded-2">
+                    <span class="material-symbols-outlined book-color">
+                        book_5
+                    </span>
+                    <div class="book-mini-info">
+                        <div class="fw-bold text-white small">{{ book.title }}</div>
+                        <div class="text-secondary x-small">{{ book.author_name }} · {{ book.year }}</div>
+                    </div>
+                </div>
+                } @empty {
+                <p class="text-danger text-center fst-italic small">No books in this catalog.</p>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer border-0 pt-0">
+        <button class="btn btn-primary px-4 py-2 fw-bold w-100" (click)="close()">
+            Close
+        </button>
+    </div>
+</div>
+}

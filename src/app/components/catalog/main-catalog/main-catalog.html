@@ -1,0 +1,94 @@
+<div class="catalog-container container py-4">
+    <!-- 🔹 Search + Create -->
+    <div class="row g-4 mb-5 align-items-end">
+        <div class="col-md-9 search-group d-flex flex-column gap-2">
+            <span class="small fw-bold text-uppercase tracking-wider">Search Catalogs</span>
+            <div class="search-box position-relative">
+                <input type="text" placeholder="Search by name..." autocomplete="off" [value]="catalogSearchQuery()"
+                    (input)="onSearchInput($any($event.target).value)" class="form-control ps-5 border-0 rounded-3">
+                <span
+                    class="position-absolute start-0 top-50 translate-middle-y ms-3 opacity-50 material-symbols-outlined">
+                    search
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3 text-md-end">
+            <button class="btn-primary px-2 py-2 fw-bold w-100 text-white" (click)="openCreateModal()"
+                style="height: 56px;">
+                <div class="d-flex flex-row align-items-center justify-content-center gap-1">
+                    <span class="material-symbols-outlined">
+                        add
+                    </span>
+                    Create Catalog
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <!-- 🔹 Catalog Title -->
+    <h3 class="section-title h5 fw-bold mb-4">Manage Library</h3>
+
+    <!-- 🔹 Catalog list -->
+    <div class="catalog-list scrollable-container pe-2">
+        @for (catalog of catalogs(); track $index) {
+        <div class="catalog-item d-flex justify-content-between align-items-center p-3 mb-3 rounded-3 border">
+            <div class="d-flex align-items-center gap-3">
+                <div class="catalog-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <div class="book-icon position-relative">
+                        <span class="book red"></span>
+                        <span class="book blue"></span>
+                        <span class="book green"></span>
+                    </div>
+                </div>
+                <div class="catalog-info">
+                    <h6 class="mb-0 fw-bold text-white">{{ catalog.name }}</h6>
+                    <small class="text-secondary opacity-75">Books: {{ catalog.books.length || 0 }}</small>
+                </div>
+            </div>
+
+            <div class="action-buttons d-flex gap-2">
+                <button class="btn btn-action btn-view" (click)="openViewModal(catalog.id)" title="View Details">
+                    <div class="d-flex flex-row align-items-center justify-content-center gap-1">
+                        <span class="fs-6 material-symbols-outlined">
+                            visibility
+                        </span>
+                        View
+                    </div>
+                </button>
+                <button class="btn btn-action btn-edit" (click)="openEditModal(catalog)" title="Edit Catalog">
+                    <div class="d-flex flex-row align-items-center justify-content-center gap-1">
+                        <span class="fs-6 material-symbols-outlined">
+                            edit
+                        </span>
+                        Edit
+                    </div>
+                </button>
+                <button class="btn btn-action btn-delete" (click)="deleteCatalog(catalog.id)" title="Delete Catalog">
+                    <div class="d-flex flex-row align-items-center justify-content-center gap-1">
+                        <span class="fs-6 material-symbols-outlined">
+                            delete
+                        </span>
+                        Delete
+                    </div>
+                </button>
+            </div>
+        </div>
+        }
+
+        <!-- 🔹 Loading spinner -->
+        @if (catalogsLoading()) {
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        }
+
+        <!-- 🔹 Empty state -->
+        @if (!catalogsLoading() && catalogs().length === 0) {
+        <div class="text-center py-5 rounded-3 border border-dashed">
+            <p class="mb-0 fst-italic text-danger">No catalogs found matching your search</p>
+        </div>
+        }
+    </div>
+</div>

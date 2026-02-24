@@ -1,0 +1,40 @@
+<div class="modal-content border-0">
+    <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold text-uppercase tracking-wider fs-6">{{ isUpdate ? 'Update' : 'Create' }} Catalog
+        </h5>
+        <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="cancel()"></button>
+    </div>
+
+    <div class="modal-body py-4" [formGroup]="form">
+        <!-- Name input -->
+        <div class="mb-4">
+            <span class="small fw-bold text-uppercase tracking-wider mb-2 opacity-75">Catalog Name</span>
+            <div class="input-group">
+                <input type="text" class="form-control border-0 text-white py-2" formControlName="name"
+                    placeholder="Enter catalog name..." />
+            </div>
+            @if (form.get('name')?.invalid && form.get('name')?.touched) {
+            <div class="text-danger mt-1 small fst-italic">
+                Catalog name is required
+            </div>
+            }
+        </div>
+
+        <!-- Books multi-select -->
+        <div class="mb-2">
+            <span class="small fw-bold text-uppercase tracking-wider mb-2 opacity-75">Select Books</span>
+            <ng-select [items]="booksDropdown()" bindLabel="title" bindValue="id" formControlName="books"
+                [multiple]="true" [searchable]="true" placeholder="Choose books to include..." class="premium-select">
+            </ng-select>
+        </div>
+    </div>
+
+    <div class="modal-footer border-0 pt-0">
+        <button class="btn btn-cancel px-4 py-2 fw-bold" (click)="cancel()">
+            Cancel
+        </button>
+        <button class="btn btn-primary px-4 py-2 fw-bold" [disabled]="loading" (click)="save()">
+            {{ loading ? 'Saving...' : (isUpdate ? 'Update Catalog' : 'Create Catalog') }}
+        </button>
+    </div>
+</div>

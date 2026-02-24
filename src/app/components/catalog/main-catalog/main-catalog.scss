@@ -1,0 +1,153 @@
+@use "../../../../variables" as *;
+
+.catalog-container {
+    padding: 1rem 0;
+}
+
+.search-box {
+    input {
+        background-color: $bg-card;
+        color: $text-primary;
+        height: 56px;
+        transition: all 0.2s;
+
+        &:focus {
+            outline: none;
+            border-color: $accent-primary;
+            box-shadow: 0 0 0 2px $box-shadow-color;
+        }
+
+        &::placeholder {
+            color: $text-muted;
+        }
+    }
+}
+
+.btn-primary {
+    background-color: $accent-primary;
+    border-color: transparent;
+    border-radius: $radius-md;
+    height: 56px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    &:hover {
+        background-color: $accent-hover;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba($accent-primary, 0.3);
+    }
+}
+
+.catalog-item {
+    background-color: $bg-card;
+    border-color: $border-light !important;
+    transition: all 0.2s;
+
+    &:hover {
+        border-color: rgba($accent-primary, 0.3) !important;
+        background-color: rgba(15, 23, 42, 0.8);
+    }
+}
+
+.catalog-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba($accent-primary, 0.1);
+    font-size: 1.2rem;
+}
+
+.btn-action {
+    width: 120px;
+    height: 40px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $radius-sm;
+    transition: all 0.2s;
+    color: $text-primary;
+
+    &.btn-view {
+        background: rgba($accent-primary, 0.6);
+    }
+
+    &.btn-edit {
+        background: rgba($accent-warning, 0.6);
+    }
+
+    &.btn-delete {
+        background: rgba($accent-danger, 0.6);
+    }
+
+    &.btn-view:hover {
+        background: rgba($accent-primary, 0.4);
+    }
+
+    &.btn-edit:hover {
+        background: rgba($accent-warning, 0.4);
+    }
+
+    &.btn-delete:hover {
+        background: rgba($accent-danger, 0.4);
+    }
+}
+
+.scrollable-container {
+    max-height: 400px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: $border-light;
+        border-radius: 3px;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    }
+}
+
+.border-dashed {
+    border-style: dashed !important;
+    border-color: $border-light !important;
+}
+
+.book-icon {
+    width: 20px;
+    height: 20px;
+
+    .book {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border-radius: 2px;
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+
+        &.red {
+            background: $accent-danger;
+            z-index: 3;
+            left: 0;
+            top: 0;
+        }
+
+        &.blue {
+            background: $accent-primary;
+            z-index: 2;
+            left: 3px;
+            top: 3px;
+        }
+
+        &.green {
+            background: $accent-success;
+            z-index: 1;
+            left: 7px;
+            top: 7px;
+        }
+    }
+}

@@ -1,0 +1,107 @@
+@use "../../../../variables" as *;
+
+.modal-content {
+    background-color: transparent;
+}
+
+
+.form-control {
+    background-color: $bg-card;
+    color: $text-primary;
+    height: 48px;
+    transition: all 0.2s;
+
+    &:focus {
+        outline: none;
+        border-color: $accent-primary;
+        box-shadow: 0 0 0 2px $box-shadow-color;
+    }
+
+    &::placeholder {
+        color: $text-muted;
+    }
+}
+
+
+.premium-select ::ng-deep {
+    .ng-select-container {
+        border: none !important;
+        background-color: $bg-card !important;
+        align-items: center;
+
+        .ng-arrow-wrapper {
+            display: flex;
+            align-items: center;
+            padding-right: 8px;
+        }
+    }
+
+    .ng-value-container {
+        padding: 12px !important;
+    }
+
+    .ng-placeholder {
+        margin-top: 6px !important;
+    }
+
+    .ng-value {
+        background-color: rgba($accent-primary, 0.2) !important;
+        border: 1px solid rgba($accent-primary, 0.3) !important;
+        color: $text-primary !important;
+
+
+        .ng-value-icon {
+            border-right: 1px solid rgba($accent-primary, 0.3) !important;
+
+            &:hover {
+                background-color: rgba($accent-primary, 0.4) !important;
+            }
+        }
+    }
+
+    /* Selected option in dropdown */
+    .ng-dropdown-panel {
+        .ng-option.ng-option-selected {
+            background-color: rgba($accent-primary, 0.25) !important;
+            color: $text-primary !important;
+        }
+
+        /* Hover state */
+        .ng-option.ng-option-marked {
+            background-color: rgba($accent-primary, 0.35) !important;
+            color: $text-primary !important;
+        }
+    }
+}
+
+.btn-primary {
+    background-color: $accent-primary;
+    border-color: transparent;
+    border-radius: $radius-md;
+    transition: all 0.3s;
+
+    &:hover:not(:disabled) {
+        background-color: $accent-hover;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba($accent-primary, 0.3);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        background-color: $text-muted;
+    }
+}
+
+.btn-cancel {
+    background-color: rgba($accent-danger, 0.6);
+    border-color: transparent;
+    border-radius: $radius-md;
+    color: $text-primary;
+    transition: all 0.3s;
+
+    &:hover {
+        background-color: rgba($accent-danger, 0.4);
+        transform: translateY(-1px);
+        color: $text-primary;
+    }
+}
